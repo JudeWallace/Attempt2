@@ -10,8 +10,9 @@ import json
 from flask import Flask, render_template, request
 import logging
 
-from covid_data_handler import covid_API_request, dashboard_covid_data, schedule_covid_upadates
-from covid_news_handling import  dashboard_news, news_API_request, update_news
+from covid_data_handler import covid_API_request, dashboard_covid_data
+from covid_data_handler import schedule_covid_upadates
+from covid_news_handling import dashboard_news, news_API_request, update_news
 from routine_tests import run_tests
 from time_conversion import interval_in_seconds
 from scheduler import s
@@ -39,14 +40,6 @@ with open('config.json', 'r') as json_file:
 
 # Run the logger if app not in debug mode
 if not app.debug:
-    '''LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
-
-    logging.basicConfig(filename='covid_19_dashboard.log',
-        format=LOG_FORMAT,
-        level=logging.DEBUG,
-        filemode= 'w'
-        )
-    '''
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 
@@ -62,7 +55,7 @@ if not app.debug:
 
 
 @app.route("/")
-@app.route("/index", methods= ['GET','POST'])
+@app.route("/index", methods=['GET', 'POST'])
 def submitted_form() -> tuple:
     """
     This module is the event driven architecture of the application. It takes
@@ -83,9 +76,10 @@ def submitted_form() -> tuple:
     s.run(blocking=False)
 
     NEWS = dashboard_news()
-    LOCAL7DAY_CASES, LAST7DAYS_CASES, CURRENT_HOSPTIAL_CASES, TOTAL_DEATHS = dashboard_covid_data()
+    LOCAL7DAY_CASES, LAST7DAYS_CASES, CURRENT_HOSPTIAL_CASES, TOTAL_DEATHS = (
+        dashboard_covid_data()
+    )
     logger.info("Current data retrieved from news and data modules")
-    
     # Get data out of the url
     update_label = request.args.get('two')
     remove_article = request.args.get('notif')
@@ -104,23 +98,29 @@ def submitted_form() -> tuple:
                 data_event_id = SCHEDULEDUPDATES[i]['dataID']
                 # Checks which events and event id are in the schedueled 
                 # update and cancel them in the scheduler
-                if news_event_id != None and data_event_id != None:
-                    logger.info(f"Removing specified event {SCHEDULEDUPDATES[i]}")
+                if news_event_id is not None and data_event_id is not None:
+                    logger.info(
+                        f"Removing specified event {SCHEDULEDUPDATES[i]}"
+                    )
                     try:
                         s.cancel(news_event_id)
                         s.cancel(data_event_id)
                     except ValueError:
                         logger.warning("Event Not in queue")
 
-                elif news_event_id != None and data_event_id == None:
-                    logger.info(f"Removing specified event {SCHEDULEDUPDATES[i]}")
+                elif news_event_id is not None and data_event_id is not None:
+                    logger.info(
+                        f"Removing specified event {SCHEDULEDUPDATES[i]}"
+                    )
                     try:
                         s.cancel(news_event_id)
                     except ValueError:
                         logger.warning("Event Not in queue")
 
-                elif data_event_id != None and news_event_id == None:
-                    logger.info(f"Removing specified event {SCHEDULEDUPDATES[i]}")
+                elif data_event_id is not None and news_event_id is None:
+                    logger.info(
+                        f"Removing specified event {SCHEDULEDUPDATES[i]}"
+                    )
                     try:
                         s.cancel(data_event_id)
                     except ValueError:
@@ -141,21 +141,29 @@ def submitted_form() -> tuple:
         logger.info('Processing form submitted')
 
         # Check there is at least one of the update boxes selected
-        if update_data == None and update_news_headlines == None and repeat_update == None:
-            logger.warning("Schedule tried to be created with no events selected")
+        if update_data is None and update_news_headlines is None and (
+            repeat_update is None
+        ):
+            logger.warning(
+                "Schedule tried to be created with no events selected"
+            )
 
-        elif update_news_headlines != None or update_data != None:
+        elif update_news_headlines is not None or update_data is not None:
             if time_update:
                 # Check no update has the same name
                 update_already_set = False
                 for i in range(len(SCHEDULEDUPDATES)):
                     if SCHEDULEDUPDATES[i]['title'] == update_label:
-                        logger.warning("Schedule tried to be created with the same label")
+                        logger.warning(
+                            "Schedule tried to be created with the same label"
+                        )
                         update_already_set = True
                         break
                 # If no update has the same name, create the scheduled update
                 if not update_already_set:
-                    schedule_content = f'At {time_update} the following updates will run: '
+                    schedule_content = (
+                        f'At {time_update} the following updates will run: '
+                    )
                     if update_data and update_news_headlines:
                         schedule_content += 'Covid data, News articles '
                     elif update_news_headlines:
@@ -163,7 +171,7 @@ def submitted_form() -> tuple:
                     elif update_data:
                         schedule_content += 'Covid data '
                     if repeat_update:
-                        schedule_content += 'and will be repeated until cancelled'
+                        schedule_content += 'and repeated until cancelled'
                         
                     # Get time of the interval in seconds from current time
                     interval = interval_in_seconds(time_update)
@@ -173,17 +181,25 @@ def submitted_form() -> tuple:
 
                     # If news box checked, create a news schedule
                     if update_news_headlines:
-                        news_id = update_news(None, schedule_update= 'Y', update_interval= interval)
+                        news_id = update_news(
+                            None, schedule_update='Y', update_interval=interval
+                        )
                         logger.info(f"News update scheduled for {time_update}")
 
-                    # If covid data update checked, create a covid data schedule
+                    # If covid data update checked, create a covid data 
+                    # schedule
                     if update_data:
-                        data_id = schedule_covid_upadates(update_interval= interval, update_name=update_label)
-                        logger.info(f"Covid data update scheduled for {time_update}")
+                        data_id = schedule_covid_upadates(
+                            update_interval=interval,
+                            update_name=update_label
+                            )
+                        logger.info(
+                            f"Covid data update scheduled for {time_update}"
+                        )
                 
-                    
                     # Add schedule to dicionary
-                    SCHEDULEDUPDATES.append({"title": update_label, 
+                    SCHEDULEDUPDATES.append({
+                        "title": update_label, 
                         "content": schedule_content, 
                         "newsID": news_id, 
                         "dataID": data_id,
@@ -199,36 +215,51 @@ def submitted_form() -> tuple:
     for i in range(len(SCHEDULEDUPDATES)):
         # Check if news event has not been run, by looking for the id in the 
         # scheduler queue
-        if SCHEDULEDUPDATES[i]['newsID'] != None:
+        if SCHEDULEDUPDATES[i]['newsID'] is not None:
             if SCHEDULEDUPDATES[i]['newsID'] in events:
                 logger.info(f"Event {SCHEDULEDUPDATES[i]} still in queue")
             else:
                 # If repeat is True create a new covid data schedule 
                 if SCHEDULEDUPDATES[i]['repeat'] == 'repeat':
-                    interval_repeat = interval_in_seconds(SCHEDULEDUPDATES[i]['timeofupdate'])
-                    if SCHEDULEDUPDATES[i]['newsID'] != None:
-                        repeated_news_id = update_news(None,schedule_update= 'Y',update_interval= interval_repeat)
+                    interval_repeat = interval_in_seconds(
+                        SCHEDULEDUPDATES[i]['timeofupdate']
+                    )
+                    if SCHEDULEDUPDATES[i]['newsID'] is not None:
+                        repeated_news_id = update_news(
+                            None, schedule_update='Y',
+                            update_interval=interval_repeat
+                        )
                         # Update dicionary with new event id
                         SCHEDULEDUPDATES[i]['newsID'] = repeated_news_id
-                        logger.info(f"Event {SCHEDULEDUPDATES[i]} event retriggred")
+                        logger.info(
+                            f"Event {SCHEDULEDUPDATES[i]} event retriggred"
+                        )
                 else:
                     logger.info(f"Removing run event {SCHEDULEDUPDATES[i]}")
                     delete = True
 
         # Check if covid data event has not been run, by looking for the id in 
         # the scheduler queue
-        if SCHEDULEDUPDATES[i]['dataID'] != None:
+        if SCHEDULEDUPDATES[i]['dataID'] is not None:
             if SCHEDULEDUPDATES[i]['dataID'] in events:
-                 logger.info(f"Event {SCHEDULEDUPDATES[i]} still in queue")
+                logger.info(f"Event {SCHEDULEDUPDATES[i]} still in queue")
             else:
                 # If repeat is True create a new covid data schedule
                 if SCHEDULEDUPDATES[i]['repeat'] == 'repeat':
-                    interval_repeat = interval_in_seconds(SCHEDULEDUPDATES[i]['timeofupdate'])
-                    if SCHEDULEDUPDATES[i]['dataID'] != None:
-                        repeated_news_id = update_news(None,schedule_update= 'Y',update_interval= interval_repeat)
+                    interval_repeat = interval_in_seconds(
+                        SCHEDULEDUPDATES[i]['timeofupdate']
+                    )
+                    if SCHEDULEDUPDATES[i]['dataID'] is not None:
+                        repeated_news_id = update_news(
+                            None, 
+                            schedule_update='Y', 
+                            update_interval=interval_repeat
+                        )
                         # Update dicionary with new event id
                         SCHEDULEDUPDATES[i]['newsID'] = repeated_news_id
-                        logger.info(f"Event {SCHEDULEDUPDATES[i]} event retriggred")
+                        logger.info(
+                            f"Event {SCHEDULEDUPDATES[i]} event retriggred"
+                        )
                 else:
                     logger.info(f"Removing run event {SCHEDULEDUPDATES[i]}")
                     delete = True
@@ -242,20 +273,19 @@ def submitted_form() -> tuple:
     if TESTING not in s.queue:
             TESTING = run_tests()
 
-  
-    return render_template ("index.html", 
+    return render_template(
+        "index.html", 
         title='Covid-19 Statistics', 
-        location = dasboard_config['local_location'],
-        local_7day_infections = LOCAL7DAY_CASES,
-        nation_location = dasboard_config['national_location'],
-        national_7day_infections = LAST7DAYS_CASES,
-        hospital_cases= 'Hospital cases: ' + str(CURRENT_HOSPTIAL_CASES), 
-        deaths_total= 'Total deaths: ' + str(TOTAL_DEATHS),
-        news_articles= NEWS,
-        updates = SCHEDULEDUPDATES, 
+        location=dasboard_config['local_location'],
+        local_7day_infections=LOCAL7DAY_CASES,
+        nation_location=dasboard_config['national_location'],
+        national_7day_infections=LAST7DAYS_CASES,
+        hospital_cases='Hospital cases: ' + str(CURRENT_HOSPTIAL_CASES), 
+        deaths_total='Total deaths: ' + str(TOTAL_DEATHS),
+        news_articles=NEWS, updates=SCHEDULEDUPDATES, 
         favicon='./static/images/covid_icon.png'
-       )
-
-
+    )
+    
+    
 if __name__ == '__main__':
     app.run(debug=False)
