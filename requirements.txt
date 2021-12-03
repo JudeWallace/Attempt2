@@ -1,4 +1,4 @@
 requests==2.26.0
-sched==
+sched==3.10.0
 uk_covid19==1.2.2
 flask==2.0.2

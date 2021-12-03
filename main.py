@@ -56,7 +56,7 @@ if not app.debug:
 
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
-def submitted_form() -> tuple:
+def submitted_form() -> str:
     """
     This module is the event driven architecture of the application. It takes
     in inputs from the user and does the corresponding task dependent on what
@@ -66,8 +66,10 @@ def submitted_form() -> tuple:
             None
         
         Returns:
+            (function) render_template() -> str: Renders the html template in
+                                                 the templated folder with the
+                                                 given content
         
-
     """
 
     global TESTING

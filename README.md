@@ -40,9 +40,15 @@ locally, also showing all upto date news. The dashboard coordinates information 
 ## How To Use
 
 ### Installation
-1. Once you have dowloaded the respoiroty, open the command prompt in the directory of the project, using --> cd Covid19_dasboard
-2. Then using pip use the following command --> pip -r requirements.txt
-    * If you don't have pip installed, first install pip
+1. Once you have dowloaded the respoiroty, open the command prompt in the directory the project is located, then use the following command
+```
+$ cd Covid19-Dashboard
+```
+2. Then using pip use the following command 
+```
+$ pip install -r requirements.txt
+```
+* If you don't have pip installed, first install pip.
     Once pip is install, go back and complete step 2
 3. Once everthing has been installed correctly the appilication should have all the required modules to run.
 
