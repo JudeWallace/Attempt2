@@ -143,8 +143,9 @@ def submitted_form() -> str:
         logger.info('Processing form submitted')
 
         # Check there is at least one of the update boxes selected
-        if update_data is None and update_news_headlines is None and \
-            repeat_update is None:
+        if update_data is None and update_news_headlines is None and (
+            repeat_update is None
+        ):
             logger.warning(
                 "Schedule tried to be created with no events selected"
             )
@@ -209,7 +210,7 @@ def submitted_form() -> str:
                         })
             else:
                 logger.warning("Form submitted with no time attribute")
-
+    '''
     # Check schedulded event is still in the queue
     events = s.queue
     delete = False
@@ -277,7 +278,36 @@ def submitted_form() -> str:
         # from the schedule  
         if delete:
             del SCHEDULEDUPDATES[i]
-        
+    '''
+    events = s.queue
+    delete = False
+    for event in events:
+        for schedule in SCHEDULEDUPDATES:
+            if schedule['newsID'] is not None:
+                if schedule['newsID'] is event:
+                    logger.info(f"Event {schedule} still in queue")
+                else:
+                    # If repeat is True create a new covid data schedule 
+                    if schedule['repeat'] == 'repeat':
+                        interval_repeat = interval_in_seconds(
+                            schedule['timeofupdate']
+                        )
+                        if schedule['newsID'] is not None:
+                            repeated_news_id = update_news(
+                                None, schedule_update='Y',
+                                update_interval=interval_repeat
+                            )
+                            # Update dicionary with new event id
+                            SCHEDULEDUPDATES[i]['newsID'] = repeated_news_id
+                            logger.info(
+                                f"Event  event retriggred"
+                            )
+                    else:
+                        logger.info(f"Removing event ")
+                        delete = True
+                if delete:
+                    SCHEDULEDUPDATES.pop(schedule)
+
     # Check if routine test have beens scheduled, if not schedule it
     if TESTING not in s.queue:
             TESTING = run_tests()

@@ -111,7 +111,8 @@ def news_API_request(covid_terms='Covid COVID-19 coronavirus') -> True:
     return True
 
 
-def update_news(removed_article: str, schedule_update='N', update_interval=0) -> list or Event:
+def update_news(removed_article: str, schedule_update='N', update_interval=0) \
+     -> list or Event:
     """
     Removes the article specified to be removed by the user and rewrites the 
     news json file without the removed article in. Then returns all the 

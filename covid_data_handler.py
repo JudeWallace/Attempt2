@@ -107,7 +107,7 @@ def process_covid_csv_data(covid_csv_data: list) -> tuple:
         return last7days_cases, current_hospital_cases, total_deaths   
 
 
-def process_API_data(covid_csv_data: list) -> tuple or int:
+def process_API_data(covid_csv_data: list) -> tuple or int or None:
     """
     Checks which data is in the file, local or national. 
     Returns the required data from the API depended on if its local or national 
@@ -153,7 +153,8 @@ def process_API_data(covid_csv_data: list) -> tuple or int:
         return local7days_cases
 
     else:
-        last7days_cases, current_hospital_cases, total_deaths = process_covid_csv_data(covid_csv_data)
+        last7days_cases, current_hospital_cases, total_deaths = \
+            process_covid_csv_data(covid_csv_data)
 
         return last7days_cases, current_hospital_cases, total_deaths
     
@@ -161,7 +162,7 @@ def process_API_data(covid_csv_data: list) -> tuple or int:
 def covid_API_request(location='Exeter', location_type='ltla') -> True:
     """
     Using the uk_covid19 module this function grabs the upto date data on 
-    cornavirus.Once the api has grabbed the data the data is then saved to the 
+    cornavirus. Once the api has grabbed the data the data is then saved to the 
     respective csv file, covid_data_cache.csv. To be accessed and minulapated 
     accordingly in the following functions
         
@@ -267,7 +268,8 @@ def dashboard_covid_data() -> tuple:
         current_hospital_cases = data['current_hospital_cases']
         total_deaths = data['total_deaths']
 
-    return local7days_cases, last7days_cases, current_hospital_cases, total_deaths 
+    return local7days_cases, last7days_cases, current_hospital_cases, \
+        total_deaths 
 
 
 def schedule_covid_upadates(update_interval: int, update_name: str) -> Event:
