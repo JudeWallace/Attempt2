@@ -8,14 +8,14 @@ from scheduler import s
 
 def test_parse_csv_data() -> None:
     """Tests the parse_csv_data function"""
-
+    # Matts test
     data = parse_csv_data('nation_2021-10-28.csv') 
     assert len(data) == 639
 
 
 def test_process_covid_csv_data() -> None:
     """Tests the parse_csv_data function"""
-
+    # Matts test
     last7days_cases, current_hospital_cases, total_deaths = process_covid_csv_data(parse_csv_data('nation_2021-10-28.csv'))  
     assert last7days_cases == 240_299
     assert current_hospital_cases == 7_019 
@@ -43,6 +43,10 @@ def test_covid_API_request() -> None:
     assert covid_API_request()
     assert covid_API_request('Exeter', 'ltla') == covid_API_request()
 
+    # Matts test
+    data = covid_API_request()
+    assert isinstance(data, dict)
+
 
 def test_dashboard_covid_data() -> None:
     """Tests the dashboard_covid_data function"""
@@ -57,7 +61,10 @@ def test_dashboard_covid_data() -> None:
 
 
 def test_schedule_covid_upadates() -> None:
+
     """Tests the schedule_covid_upadates function"""
+    # Matts test
+    schedule_covid_upadates(update_interval=10, update_name='update test')
 
     covid_schedule = schedule_covid_upadates(1, "testing function")
     assert covid_schedule in s.queue

@@ -8,13 +8,18 @@ from scheduler import s
 
 def test_news_API_request() -> None:
     """Tests the news_API_requet function"""
-    
+    # Matts test
     assert news_API_request()
     assert news_API_request('Covid COVID-19 coronavirus') == news_API_request()
 
 
 def test_update_news() -> None:
     """Tests the update_news function"""
+    # Matts test
+    try:
+        update_news('test')
+    except:
+        print("My function takes 3 arguments, only one was given")
 
     news_schedule = update_news('', 'Y', 10)
     assert news_schedule in s.queue
