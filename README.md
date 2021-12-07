@@ -26,10 +26,8 @@ locally, also showing all upto date news. The dashboard coordinates information 
 ## Prerequisites
 
 1. Pyhton 3.9+
-2. requests 2.26.0+
-3. sched 3.10.0+
-4. uk_covid19 1.2.2+
-5. flask 2.0.2+
+2. uk_covid19 1.2.2+
+3. flask 2.0.2+
 
 
 [Back To The Top](#covid-19-dashboard)
