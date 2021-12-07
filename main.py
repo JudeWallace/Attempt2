@@ -288,8 +288,8 @@ def submitted_form() -> str:
         local_7day_infections=LOCAL7DAY_CASES,
         nation_location=dasboard_config['national_location'],
         national_7day_infections=LAST7DAYS_CASES,
-        hospital_cases='Hospital cases: ' + str(CURRENT_HOSPTIAL_CASES), 
-        deaths_total='Total deaths: ' + str(TOTAL_DEATHS),
+        hospital_cases='Current Hospital Cases: ' + str(CURRENT_HOSPTIAL_CASES), 
+        deaths_total='Total Deaths: ' + str(TOTAL_DEATHS),
         news_articles=NEWS, updates=SCHEDULEDUPDATES, 
         favicon='./static/images/covid_icon.png'
     )
