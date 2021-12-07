@@ -16,10 +16,7 @@ def test_news_API_request() -> None:
 def test_update_news() -> None:
     """Tests the update_news function"""
     # Matts test
-    try:
-        update_news('test')
-    except:
-        print("My function takes 3 arguments, only one was given")
+    update_news('test')
 
     news_schedule = update_news('', 'Y', 10)
     assert news_schedule in s.queue
