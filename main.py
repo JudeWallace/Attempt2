@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 # Update all the news articles when application is first loaded
 news_API_request()
-update_covid_data_json
+update_covid_data_json()
 
 # Global variables
 TESTING = run_tests()
