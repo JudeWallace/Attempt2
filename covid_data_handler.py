@@ -159,7 +159,7 @@ def process_API_data(covid_csv_data: list) -> tuple or int or None:
         return last7days_cases, current_hospital_cases, total_deaths
     
     
-def covid_API_request(location='Exeter', location_type='ltla') -> True:
+def covid_API_request(location='Exeter', location_type='ltla') -> dict:
     """
     Using the uk_covid19 module this function grabs the upto date data on 
     cornavirus. Once the api has grabbed the data the data is then saved to the 
@@ -171,7 +171,9 @@ def covid_API_request(location='Exeter', location_type='ltla') -> True:
             location_type (str): Is also set as a default argument
         
         Returns:
-            True
+            {"data": [api_data]} (dict): retuns the API data in a list which
+                                         can be accessed by called data on the
+                                         assigned variable
     """
     # Setting the filters for the api
     covid_API_filter = [
@@ -202,8 +204,8 @@ def covid_API_request(location='Exeter', location_type='ltla') -> True:
         with open("covid_data_cache.csv", "w") as f:
             f.write(f"{api_data}")
         logger.info("Covid API data stored in cache file")
-
-    return True
+    
+    return {"data": [api_data]}
 
 
 def update_covid_data_json() -> True:
