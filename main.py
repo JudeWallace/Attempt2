@@ -279,7 +279,7 @@ def submitted_form() -> str:
         
     # Check if routine test have beens scheduled, if not schedule it
     if TESTING not in s.queue:
-            TESTING = run_tests()
+            TESTING = run_tests() 
 
     return render_template(
         "index.html", 
