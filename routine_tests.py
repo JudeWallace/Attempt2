@@ -44,7 +44,6 @@ def tests_scheduled_backend() -> None:
         # Test data module key functions
         logger.info("Testing covid_data_handler")
         test_process_covid_csv_data()
-        test_covid_API_request()
         test_schedule_covid_upadates()
 
         logger.info("covid_data_handler Passed")

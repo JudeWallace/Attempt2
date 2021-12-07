@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This module is all the tests for the module time_conversion.py"""
 
+import pytest
 from time_conversion import*
 
 

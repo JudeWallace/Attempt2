@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This module is all the tests for the module covid_news_handling.py"""
 
+import pytest
 from covid_news_handling import dashboard_news, news_API_request, update_news
 from scheduler import s
 

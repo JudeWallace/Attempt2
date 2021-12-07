@@ -2,7 +2,7 @@
 """Links the HTML template and backened to create the application
 
 Within this module the event driven architecture is created. The module deals 
-with all user inputs, processes them and does then complete corresponding task. 
+with all user inputs, processes them and then completes the corresponding task. 
 It takes use of the python module flask to render the HTML bootstrap template.
 """
 # Imports required
@@ -69,7 +69,6 @@ def submitted_form() -> str:
             (function) render_template() -> str: Renders the html template in
                                                  the templated folder with the
                                                  given content
-        
     """
 
     global TESTING

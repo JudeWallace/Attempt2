@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """This module is all the tests for the module covid_data_handler.py"""
 
+import pytest
 from covid_data_handler import *
 from scheduler import s
 
