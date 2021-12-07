@@ -8,7 +8,7 @@
 - [How To Use](#how-to-use)
 - [Testing](#testing)
 - [Developer Manual](#developer-manual)
-- [Refrences](#references)
+- [Refrences](#refrences)
 - [License](#license)
 - [Author Info](#author-info)
 
