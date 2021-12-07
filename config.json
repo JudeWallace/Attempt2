@@ -3,7 +3,7 @@
         "local_areaCode" : "E07000041"
     },
     "news" : {
-        "API_KEY" : "<Enter news API key here>",
+        "API_KEY" : "a6b9a7d0805746b19c2f0afe174ce7be",
         "news_source" : "bbc-news",
         "language" : "en"
         },
