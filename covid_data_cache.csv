@@ -1,6 +1,7 @@
 areaCode,areaName,areaType,date,cumDailyNsoDeathsByDeathDate,hospitalCase,newCasesBySpecimenDate
-E07000041,Exeter,ltla,2021-12-04,,,38
-E07000041,Exeter,ltla,2021-12-03,,,98
+E07000041,Exeter,ltla,2021-12-05,,,20
+E07000041,Exeter,ltla,2021-12-04,,,116
+E07000041,Exeter,ltla,2021-12-03,,,106
 E07000041,Exeter,ltla,2021-12-02,,,136
 E07000041,Exeter,ltla,2021-12-01,,,126
 E07000041,Exeter,ltla,2021-11-30,,,129
