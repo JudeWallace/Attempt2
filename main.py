@@ -36,7 +36,7 @@ TOTAL_DEATHS = None
 # Get the data from config file
 with open('config.json', 'r') as json_file:
     data = json.load(json_file)
-    dasboard_config = data['dashboard']
+    dashboard_config = data['dashboard']
 
 # Run the logger if app not in debug mode
 if not app.debug:
@@ -284,9 +284,9 @@ def submitted_form() -> str:
     return render_template(
         "index.html", 
         title='Covid-19 Statistics', 
-        location=dasboard_config['local_location'],
+        location=dashboard_config['local_location'],
         local_7day_infections=LOCAL7DAY_CASES,
-        nation_location=dasboard_config['national_location'],
+        nation_location=dashboard_config['national_location'],
         national_7day_infections=LAST7DAYS_CASES,
         hospital_cases='Current Hospital Cases: ' + str(CURRENT_HOSPTIAL_CASES), 
         deaths_total='Total Deaths: ' + str(TOTAL_DEATHS),
@@ -296,4 +296,4 @@ def submitted_form() -> str:
     
     
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=dashboard_config["debug"])
