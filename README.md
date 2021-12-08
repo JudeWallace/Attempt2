@@ -16,8 +16,7 @@
 
 ## Description
 
-The Covid19 dashboard is a web application that keeps upto date with the current infection rates, both nationally and 
-locally, also showing all upto date news. The dashboard coordinates information about Covid-19 infection rates from the Public Health England API and news stories about Covid from the given news API, specified in the config.json file. Events are not automated on the dasboard, the events are either secheduled from inside the source code or/but mostly triggerd by the user inputs meaning the software is built around an event-driven architecture; with the use of flask. All of the backend is coded in python with flask linking the backend with the front end, which is coded in html with flask bootstramp templating embedded in it.
+The Covid19 dashboard is a web application that keeps upto date with the current infection rates, both nationally and locally, also showing all upto date news. The dashboard coordinates information about Covid-19 infection rates from the Public Health England API and news stories about Covid from the given news API, specified in the config.json file. Events are not automated on the dasboard, the events are either secheduled from inside the source code or/but mostly triggerd by the user inputs meaning the software is built around an event-driven architecture; with the use of flask. All of the backend is coded in python with flask linking the backend with the front end, which is coded in html with flask bootstramp templating embedded in it.
 
 [Back To The Top](#covid-19-dashboard)
 
@@ -25,7 +24,7 @@ locally, also showing all upto date news. The dashboard coordinates information 
 
 ## Prerequisites
 
-1. Pyhton 3.9+
+1. Python 3.9+
 2. uk_covid19 1.2.2+
 3. flask 2.0.2+
 
