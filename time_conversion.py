@@ -44,10 +44,8 @@ def interval_in_seconds(hhmm: str) -> int:
     time_of_update = hhmm_to_seconds(hhmm)
     
     if time_of_update < current_time:
-        logger.info("Scheduled event will happen on the following day")
         interval = (86400 - current_time) + time_of_update
     else:
-        logger.info("Scheduled event will happen day of creation")
         interval = time_of_update - current_time
 
     logger.info("Returning update period in seconds")
