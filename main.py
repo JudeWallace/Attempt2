@@ -211,16 +211,8 @@ def submitted_form() -> str:
 
     # Check schedulded event is still in the queue
     events = s.queue
-    delete = False
-    for i in range(len(SCHEDULEDUPDATES)):
-        try:
-            stresstest = SCHEDULEDUPDATES[i]
-        except IndexError:
-            logger.warning(f"When checking {stresstest}")
-            logger.warning("Too many events happening at once. Completing "\
-                "the other events when page is next refreshed")
-            break
-
+    delete = []
+    for i in range(len(SCHEDULEDUPDATES)): 
         # Check if news event has not been run, by looking for the id in the 
         # scheduler queue       
         if SCHEDULEDUPDATES[i]['newsID'] is not None:
@@ -244,7 +236,7 @@ def submitted_form() -> str:
                         )
                 else:
                     logger.info(f"Removing event {SCHEDULEDUPDATES[i]}")
-                    delete = True
+                    delete.append(SCHEDULEDUPDATES[i])
       
         # Check if covid data event has not been run, by looking for the id in 
         # the scheduler queue
@@ -270,13 +262,14 @@ def submitted_form() -> str:
                         )
                 else:
                     logger.info(f"Removing run event {SCHEDULEDUPDATES[i]}")
-                    delete = True
+                    delete.append(SCHEDULEDUPDATES[i])
 
-        # If schedule has been run and is not required to repeat, delete it 
-        # from the schedule  
-        if delete:
-            del SCHEDULEDUPDATES[i]
-        
+    # If schedule has been run and is not required to repeat, delete it 
+    # from the schedule  
+    for j in SCHEDULEDUPDATES:
+        if j in delete:
+            SCHEDULEDUPDATES.remove(j)  
+
     # Check if routine test have beens scheduled, if not schedule it
     if TESTING not in s.queue:
             TESTING = run_tests() 
