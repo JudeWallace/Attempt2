@@ -52,7 +52,7 @@ def parse_csv_data(csv_filename: str) -> list or None:
         logger.exception("csv filepath not found")
 
 
-def process_covid_csv_data(covid_csv_data: list) -> tuple:
+def process_covid_csv_data(covid_csv_data: list) -> tuple or None:
     """
     Returns the required data from the static covid file and processes it 
     accordingly
