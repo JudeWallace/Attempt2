@@ -56,7 +56,7 @@ if not app.debug:
 
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
-def submitted_form() -> function:
+def submitted_form():
     """
     This module is the event driven architecture of the application. It takes
     in inputs from the user and does the corresponding task dependent on what
