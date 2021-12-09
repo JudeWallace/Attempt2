@@ -56,7 +56,7 @@ if not app.debug:
 
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
-def submitted_form() -> str:
+def submitted_form() -> function:
     """
     This module is the event driven architecture of the application. It takes
     in inputs from the user and does the corresponding task dependent on what
@@ -268,11 +268,11 @@ def submitted_form() -> str:
     # from the schedule  
     for j in SCHEDULEDUPDATES:
         if j in delete:
-            SCHEDULEDUPDATES.remove(j)  
+            SCHEDULEDUPDATES.remove(j)
 
     # Check if routine test have beens scheduled, if not schedule it
     if TESTING not in s.queue:
-            TESTING = run_tests() 
+            TESTING = run_tests()
 
     return render_template(
         "index.html", 
