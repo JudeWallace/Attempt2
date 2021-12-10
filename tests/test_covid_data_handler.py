@@ -27,14 +27,14 @@ def test_process_API_data() -> None:
 
     covid_API_request()
     local7days_cases = process_API_data(parse_csv_data('covid_data_cache.csv'))
-    assert type(local7days_cases) == int
+    assert isinstance(local7days_cases, int)
 
     covid_API_request('England', 'nation')
     last7days_cases, current_hospital_cases, total_deaths = process_API_data(parse_csv_data('covid_data_cache.csv'))  
-    assert type(local7days_cases) == int
-    assert type(last7days_cases) == int
-    assert type(current_hospital_cases) == int
-    assert type(total_deaths) == int
+    assert isinstance(local7days_cases, int)
+    assert isinstance(last7days_cases, int)
+    assert isinstance(current_hospital_cases, int)
+    assert isinstance(total_deaths, int)
 
 
 def test_covid_API_request() -> None:
@@ -52,12 +52,12 @@ def test_dashboard_covid_data() -> None:
     """Tests the dashboard_covid_data function"""
 
     assert dashboard_covid_data()
-    assert type(dashboard_covid_data()) == tuple
+    assert isinstance(dashboard_covid_data(), tuple)
     local7days_cases, last7days_cases, current_hospital_cases, total_deaths = dashboard_covid_data()
-    assert type(local7days_cases) == int
-    assert type(last7days_cases) == int
-    assert type(current_hospital_cases) == int
-    assert type(total_deaths) == int
+    assert isinstance(local7days_cases, int)
+    assert isinstance(last7days_cases, int)
+    assert isinstance(current_hospital_cases, int)
+    assert isinstance(total_deaths, int)
 
 
 def test_schedule_covid_upadates() -> None:

@@ -9,7 +9,7 @@ def test_interval_in_seconds() -> None:
     """Tests the interval_in_seconds function"""
     
     interval = interval_in_seconds("13:00")
-    assert type(interval) == int
+    assert isinstance(interval, int)
 
 
 def test_current_time_hhmm() -> None:
